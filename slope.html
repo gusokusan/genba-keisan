@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>勾配の計算｜％・角度・1:n・寸勾配を相互に換算｜現場の計算帳</title>
+<meta name="description" content="水平距離と高低差から勾配（％）・角度・1:n・寸勾配を計算。％や角度、何寸からの逆算もできます。排水勾配・スロープ・屋根の確認に。">
+<link rel="canonical" href="https://gusokusan.github.io/genba-keisan/slope.html">
+<meta property="og:title" content="勾配の計算｜％・角度・1:n・寸勾配を相互に換算">
+<meta property="og:description" content="水平距離と高低差から勾配（％）・角度・1:n・寸勾配を計算。％や角度、何寸からの逆算もできます。排水勾配・スロープ・屋根の確認に。">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#ffd500">
+<link rel="stylesheet" href="./assets/style.css">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./assets/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="現場の計算帳">
+</head>
+<body data-tool="slope">
+<header class="site"><div class="wrap"><a class="logo" href="./index.html">現場の計算帳</a><span class="tag">現場で使う計算をスマホで</span></div></header>
+<main class="wrap">
+<nav class="crumb"><a href="./index.html">現場の計算帳</a> › 勾配</nav>
+<h1>勾配の計算（％・角度・1:n・寸勾配）</h1>
+<p class="lead">わかっている値を1つ選んで入れると、ほかの表し方にまとめて換算します。排水の勾配、スロープ、法面、屋根の勾配の確認に使えます。</p>
+<div class="card">
+<div class="tabs" role="tablist"><button type="button" role="tab" data-for="len" aria-selected="true">距離と高低差</button><button type="button" role="tab" data-for="pct" aria-selected="false">％から</button><button type="button" role="tab" data-for="deg" aria-selected="false">角度から</button><button type="button" role="tab" data-for="sun" aria-selected="false">寸勾配から</button></div>
+<div data-pane="len"><div class="grid2">
+<div class="field"><label for="s_run">水平距離</label>
+<div class="inrow"><input id="s_run" type="text" inputmode="decimal" autocomplete="off" placeholder="例 1000"><span class="unit"></span></div>
+</div>
+<div class="field"><label for="s_rise">高低差</label>
+<div class="inrow"><input id="s_rise" type="text" inputmode="decimal" autocomplete="off" placeholder="例 20"><span class="unit"></span></div>
+<div class="hint">水平距離と同じ単位で</div></div></div></div>
+<div data-pane="pct" hidden><div class="grid2">
+<div class="field"><label for="s_pct">勾配</label>
+<div class="inrow"><input id="s_pct" type="text" inputmode="decimal" autocomplete="off" placeholder="例 2"><span class="unit">%</span></div>
+</div>
+<div class="field"><label for="s_run2">水平距離（任意）</label>
+<div class="inrow"><input id="s_run2" type="text" inputmode="decimal" autocomplete="off" placeholder="例 5000"><span class="unit"></span></div>
+<div class="hint">入れると高低差も出ます</div></div></div></div>
+<div data-pane="deg" hidden><div class="grid2">
+<div class="field"><label for="s_deg">角度</label>
+<div class="inrow"><input id="s_deg" type="text" inputmode="decimal" autocomplete="off" placeholder="例 30"><span class="unit">°</span></div>
+</div>
+<div class="field"><label for="s_run3">水平距離（任意）</label>
+<div class="inrow"><input id="s_run3" type="text" inputmode="decimal" autocomplete="off" placeholder="例 2"><span class="unit"></span></div>
+</div></div></div>
+<div data-pane="sun" hidden><div class="grid2">
+<div class="field"><label for="s_sun">寸勾配</label>
+<div class="inrow"><input id="s_sun" type="text" inputmode="decimal" autocomplete="off" placeholder="例 4"><span class="unit">寸</span></div>
+</div>
+<div class="field"><label for="s_run4">水平距離（任意）</label>
+<div class="inrow"><input id="s_run4" type="text" inputmode="decimal" autocomplete="off" placeholder="例 3.64"><span class="unit"></span></div>
+</div></div></div>
+<div class="result" id="s_out" aria-live="polite"></div>
+</div>
+<div class="ad" aria-hidden="true"></div>
+<h2>勾配の表し方</h2>
+<div class="tablewrap"><table>
+<tr><th>表し方</th><th>意味</th><th>よく使う場面</th></tr>
+<tr><td>％（パーセント）</td><td>高低差 ÷ 水平距離 × 100</td><td>道路・排水・スロープ</td></tr>
+<tr><td>角度（°）</td><td>水平からの傾きの角度</td><td>機械の据え付け・図面</td></tr>
+<tr><td>1：n</td><td>高さ1に対して水平がn</td><td>法面（のり面）・スロープ</td></tr>
+<tr><td>寸勾配</td><td>水平10に対する高さ（4寸＝10分の4）</td><td>屋根</td></tr>
+</table></div>
+<p>たとえば 2％ は、水平1mで2cm下がる勾配です。1：12 のスロープは、約8.3％・約4.8°になります。</p>
+<p>法面の「1：1.5」のように、土木では水平を後ろに書く表し方が一般的です。このツールの 1：n も、高さ1に対する水平 n で表示しています。</p>
+<h2>よくある質問</h2><details><summary>％と角度は比例しますか？</summary><p>比例しません。100％は45°ですが、50％は約26.6°です。角度は高低差÷水平距離の逆タンジェントで求めます。</p></details><details><summary>寸勾配の「4寸」は何％？</summary><p>水平10に対して高さ4なので、40％です。角度にすると約21.8°です。</p></details>
+<h2>ほかの計算ツール</h2><div class="tools"><a class="tool" href="concrete.html"><b>コンクリート量の計算</b><span>土間・基礎・柱の体積と生コン車の台数</span></a><a class="tool" href="rebar.html"><b>鉄筋の重量計算</b><span>D10〜D41の長さと本数から重さ</span></a><a class="tool" href="weight.html"><b>比重から重さを計算</b><span>コンクリート・鋼・土など材料別</span></a><a class="tool" href="soil.html"><b>土量の変化率（L・C）</b><span>地山・ほぐし・締固めとダンプ台数</span></a><a class="tool" href="area.html"><b>坪・㎡・畳の換算</b><span>面積の単位をまとめて変換</span></a></div>
+</main>
+<footer class="site"><div class="wrap">
+<p>計算結果は目安です。設計・積算・施工では、仕様書・設計図書・各種基準の値を必ず確認してください。</p>
+<p><a href="./index.html">ツール一覧</a> ／ <a href="./about.html">このサイトについて・プライバシーポリシー</a></p>
+<p>© 2026 現場の計算帳（hinakan）</p>
+</div></footer>
+<script src="./assets/data.js"></script>
+<script src="./assets/app.js"></script>
+<script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js");</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#ffd500"/>
+  <rect x="0" y="440" width="512" height="72" fill="#1d1d1b"/>
+  <g fill="#ffd500">
+    <polygon points="20,440 80,440 40,512 0,512 0,476"/>
+    <polygon points="140,440 200,440 160,512 100,512"/>
+    <polygon points="260,440 320,440 280,512 220,512"/>
+    <polygon points="380,440 440,440 400,512 340,512"/>
+    <polygon points="500,440 512,440 512,490 520,512 460,512"/>
+  </g>
+  <rect x="116" y="72" width="280" height="340" rx="36" fill="#1d1d1b"/>
+  <rect x="148" y="104" width="216" height="80" rx="12" fill="#fff8d6"/>
+  <text x="344" y="162" font-family="Arial, sans-serif" font-size="52" font-weight="700" fill="#1d1d1b" text-anchor="end">m³</text>
+  <g fill="#ffd500">
+    <rect x="148" y="212" width="56" height="48" rx="10"/>
+    <rect x="228" y="212" width="56" height="48" rx="10"/>
+    <rect x="308" y="212" width="56" height="48" rx="10"/>
+    <rect x="148" y="280" width="56" height="48" rx="10"/>
+    <rect x="228" y="280" width="56" height="48" rx="10"/>
+    <rect x="308" y="280" width="56" height="116" rx="10"/>
+    <rect x="148" y="348" width="136" height="48" rx="10"/>
+  </g>
+</svg>

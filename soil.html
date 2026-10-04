@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>土量の変化率（L・C）の計算｜地山・ほぐし・締固めの換算とダンプ台数｜現場の計算帳</title>
+<meta name="description" content="地山の土量から、ほぐした土量・締め固めた土量を計算。土の種類ごとの変化率L・Cの表と、ダンプの台数の目安つき。">
+<link rel="canonical" href="https://gusokusan.github.io/genba-keisan/soil.html">
+<meta property="og:title" content="土量の変化率（L・C）の計算｜地山・ほぐし・締固めの換算とダンプ台数">
+<meta property="og:description" content="地山の土量から、ほぐした土量・締め固めた土量を計算。土の種類ごとの変化率L・Cの表と、ダンプの台数の目安つき。">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#ffd500">
+<link rel="stylesheet" href="./assets/style.css">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./assets/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="現場の計算帳">
+</head>
+<body data-tool="soil">
+<header class="site"><div class="wrap"><a class="logo" href="./index.html">現場の計算帳</a><span class="tag">現場で使う計算をスマホで</span></div></header>
+<main class="wrap">
+<nav class="crumb"><a href="./index.html">現場の計算帳</a> › 土量の変化率</nav>
+<h1>土量の変化率（L・C）の計算</h1>
+<p class="lead">掘った土はふくらみ、締め固めると縮みます。土の種類を選んで土量を入れると、地山・ほぐし・締固めの3つの量にまとめて換算します。</p>
+<div class="card">
+<div class="field"><label for="so_type">土の種類</label><select id="so_type"></select></div>
+<div class="field"><label for="so_from">入れる土量の状態</label><select id="so_from"><option value="ground">地山の土量</option><option value="loose">ほぐした土量</option><option value="comp">締め固めた土量</option></select></div>
+
+<div class="field"><label for="so_q">土量</label>
+<div class="inrow"><input id="so_q" type="text" inputmode="decimal" autocomplete="off" placeholder="例 100"><span class="unit">m³</span></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="so_L">Lを自分で入れる（任意）</label>
+<div class="inrow"><input id="so_L" type="text" inputmode="decimal" autocomplete="off" placeholder="空欄なら表の値"><span class="unit"></span></div>
+</div>
+<div class="field"><label for="so_C">Cを自分で入れる（任意）</label>
+<div class="inrow"><input id="so_C" type="text" inputmode="decimal" autocomplete="off" placeholder="空欄なら表の値"><span class="unit"></span></div>
+</div></div>
+
+<div class="field"><label for="so_cap">ダンプ1台に積める量・地山換算（任意）</label>
+<div class="inrow"><input id="so_cap" type="text" inputmode="decimal" autocomplete="off" value="5.5"><span class="unit">m³</span></div>
+<div class="hint">10tダンプで土砂を運ぶ時の地山換算の目安（長崎県の積算資料）。4t車は2.2、2t車は1.1</div></div>
+<div class="result" id="so_out" aria-live="polite"></div>
+</div>
+<div class="ad" aria-hidden="true"></div>
+<h2>計算のしかた</h2>
+<ul>
+<li>ほぐした土量 ＝ 地山の土量 × L</li>
+<li>締め固めた土量 ＝ 地山の土量 × C</li>
+</ul>
+<p>Lはほぐした時のふくらみ、Cは締め固めた時の縮みの割合です。荷台に載るのはほぐした土ですが、積算ではダンプ1台の量を地山の量に直して表すことが多いので、このツールの台数は地山の土量 ÷ 1台の量（地山換算）で出しています。</p>
+<div class="tablewrap"><table><tr><th>ダンプの大きさ</th><th>土砂</th><th>軟岩</th><th>硬岩</th></tr>
+<tr><td>10t車</td><td>5.5m³</td><td>4.5m³</td><td>4.0m³</td></tr>
+<tr><td>4t車</td><td>2.2m³</td><td>1.8m³</td><td>1.6m³</td></tr>
+<tr><td>2t車</td><td>1.1m³</td><td>0.9m³</td><td>0.8m³</td></tr></table></div>
+<p class="note">1台に積める量（地山換算）の目安。長崎県の積算資料より。過積載にならないよう、実際は車検証の最大積載量で確かめてください。</p>
+<h2>土の種類ごとの変化率</h2>
+<div class="tablewrap"><table><tr><th>土の種類</th><th>L</th><th>C</th></tr><tr><td>砂質土・砂</td><td>1.2</td><td>0.9</td></tr><tr><td>礫質土</td><td>1.2</td><td>0.9</td></tr><tr><td>粘性土</td><td>1.25</td><td>0.9</td></tr><tr><td>岩塊・玉石、軟岩(I)A</td><td>1.2</td><td>1</td></tr><tr><td>軟岩(I)B</td><td>1.3</td><td>1.15</td></tr><tr><td>軟岩(II)</td><td>1.5</td><td>1.2</td></tr><tr><td>中硬岩</td><td>1.6</td><td>1.25</td></tr><tr><td>硬岩</td><td>1.65</td><td>1.4</td></tr></table></div>
+<p class="note">出典：<a href="https://www.rinya.maff.go.jp/j/sekou/gijutu/attach/pdf/bugakarisankou-58.pdf" target="_blank" rel="noopener">林野庁 積算資料「土量の変化率」（国土交通省の土木工事積算基準と同じ表）</a>／<a href="https://www.doboku.pref.nagasaki.jp/sekisankijunkouhyoutosyo/H20/H20.10.1/16zando.pdf" target="_blank" rel="noopener">長崎県 積算資料（ダンプの積載土量）</a></p>
+<p class="note">変化率は現場の土で大きく変わります。工事で使う値は、設計図書や試験の結果を優先してください。</p>
+<h2>ほかの計算ツール</h2><div class="tools"><a class="tool" href="concrete.html"><b>コンクリート量の計算</b><span>土間・基礎・柱の体積と生コン車の台数</span></a><a class="tool" href="slope.html"><b>勾配の計算</b><span>％・角度・1:n・寸勾配を相互に換算</span></a><a class="tool" href="rebar.html"><b>鉄筋の重量計算</b><span>D10〜D41の長さと本数から重さ</span></a><a class="tool" href="weight.html"><b>比重から重さを計算</b><span>コンクリート・鋼・土など材料別</span></a><a class="tool" href="area.html"><b>坪・㎡・畳の換算</b><span>面積の単位をまとめて変換</span></a></div>
+</main>
+<footer class="site"><div class="wrap">
+<p>計算結果は目安です。設計・積算・施工では、仕様書・設計図書・各種基準の値を必ず確認してください。</p>
+<p><a href="./index.html">ツール一覧</a> ／ <a href="./about.html">このサイトについて・プライバシーポリシー</a></p>
+<p>© 2026 現場の計算帳（hinakan）</p>
+</div></footer>
+<script src="./assets/data.js"></script>
+<script src="./assets/app.js"></script>
+<script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js");</script>
+</body>
+</html>

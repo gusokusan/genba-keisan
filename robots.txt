@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gusokusan.github.io/genba-keisan/sitemap.xml
