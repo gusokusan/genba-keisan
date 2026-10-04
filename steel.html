@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>鋼材の重さ計算｜鋼板・丸鋼・丸パイプ・角パイプ・単管のkg/m｜現場の計算帳</title>
+<meta name="description" content="鋼板・丸鋼・丸パイプ・角パイプの寸法から、1mあたりの重さ（kg/m）と全体の重さを計算。単管（φ48.6×2.4）の重さもすぐ出せます。">
+<link rel="canonical" href="https://gusokusan.github.io/genba-keisan/steel.html">
+<meta property="og:title" content="鋼材の重さ計算｜鋼板・丸鋼・丸パイプ・角パイプ・単管のkg/m">
+<meta property="og:description" content="鋼板・丸鋼・丸パイプ・角パイプの寸法から、1mあたりの重さ（kg/m）と全体の重さを計算。単管（φ48.6×2.4）の重さもすぐ出せます。">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#ffd500">
+<link rel="stylesheet" href="./assets/style.css">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./assets/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="現場の計算帳">
+</head>
+<body data-tool="steel">
+<header class="site"><div class="wrap"><a class="logo" href="./index.html">現場の計算帳</a><span class="tag">現場で使う計算をスマホで</span></div></header>
+<main class="wrap">
+<nav class="crumb"><a href="./index.html">現場の計算帳</a> › 鋼材の重さ</nav>
+<h1>鋼材の重さ計算（形から）</h1>
+<p class="lead">形を選んで寸法を入れると、1mあたりの重さが出ます。長さと本数を入れると全体の重さも出ます。吊り荷や運搬の目安に。</p>
+<div class="card">
+<div class="tabs" role="tablist"><button type="button" role="tab" data-for="plate" aria-selected="true">鋼板</button><button type="button" role="tab" data-for="round" aria-selected="false">丸鋼</button><button type="button" role="tab" data-for="pipe" aria-selected="false">丸パイプ・単管</button><button type="button" role="tab" data-for="box" aria-selected="false">角パイプ</button></div>
+<div data-pane="plate"><div class="grid2">
+<div class="field"><label for="st_pt">厚さ</label>
+<div class="inrow"><input id="st_pt" type="text" inputmode="decimal" autocomplete="off" placeholder="例 22"><span class="unit">mm</span></div>
+</div>
+<div class="field"><label for="st_pw">幅</label>
+<div class="inrow"><input id="st_pw" type="text" inputmode="decimal" autocomplete="off" placeholder="例 1524"><span class="unit">mm</span></div>
+</div></div><p class="note">敷鉄板 22mm×1524mm（5×10）なら長さ 3.048m。</p></div>
+<div data-pane="round" hidden>
+<div class="field"><label for="st_rd">直径</label>
+<div class="inrow"><input id="st_rd" type="text" inputmode="decimal" autocomplete="off" placeholder="例 16"><span class="unit">mm</span></div>
+</div></div>
+<div data-pane="pipe" hidden><div class="grid2">
+<div class="field"><label for="st_od">外径</label>
+<div class="inrow"><input id="st_od" type="text" inputmode="decimal" autocomplete="off" value="48.6"><span class="unit">mm</span></div>
+<div class="hint">単管は 48.6</div></div>
+<div class="field"><label for="st_ot">厚さ</label>
+<div class="inrow"><input id="st_ot" type="text" inputmode="decimal" autocomplete="off" value="2.4"><span class="unit">mm</span></div>
+<div class="hint">単管は 2.4（1.8の軽量もあり）</div></div></div></div>
+<div data-pane="box" hidden><div class="grid2">
+<div class="field"><label for="st_ba">辺 A</label>
+<div class="inrow"><input id="st_ba" type="text" inputmode="decimal" autocomplete="off" placeholder="例 100"><span class="unit">mm</span></div>
+</div>
+<div class="field"><label for="st_bb">辺 B</label>
+<div class="inrow"><input id="st_bb" type="text" inputmode="decimal" autocomplete="off" placeholder="例 50"><span class="unit">mm</span></div>
+</div>
+<div class="field"><label for="st_bt">厚さ</label>
+<div class="inrow"><input id="st_bt" type="text" inputmode="decimal" autocomplete="off" placeholder="例 3.2"><span class="unit">mm</span></div>
+</div></div></div>
+<div class="grid2">
+<div class="field"><label for="st_len">長さ（任意）</label>
+<div class="inrow"><input id="st_len" type="text" inputmode="decimal" autocomplete="off" placeholder="例 6"><span class="unit">m</span></div>
+</div>
+<div class="field"><label for="st_n">本数・枚数</label>
+<div class="inrow"><input id="st_n" type="text" inputmode="decimal" autocomplete="off" value="1"><span class="unit"></span></div>
+</div></div>
+<div class="result" id="st_out" aria-live="polite"></div>
+</div>
+<div class="ad" aria-hidden="true"></div>
+<h2>計算のしかた</h2>
+<ul>
+<li>1mあたりの重さ（kg/m）＝ 断面積（mm²）× 7.85 ÷ 1000</li>
+<li>鋼板：厚さ × 幅</li>
+<li>丸鋼：円周率 × 直径² ÷ 4</li>
+<li>丸パイプ：円周率 ×（外径 − 厚さ）× 厚さ</li>
+<li>角パイプ：A × B −（A − 2×厚さ）×（B − 2×厚さ）</li>
+</ul>
+<p>角パイプは角の丸みを無視しているので、カタログの値より少し重く出ます。正確な値はメーカーの規格表で確かめてください。</p>
+<p class="note">出典：<a href="https://www.nilim.go.jp/lab/pbg/theme/theme2/sr/yoryo0804/s-0804-1-01.pdf" target="_blank" rel="noopener">国土技術政策総合研究所「土木工事数量算出要領」表-4（t/m³）</a>／<a href="https://www.cbr.mlit.go.jp/kawatomizu/kouzou/pdf/08_04sekkeiippan.pdf" target="_blank" rel="noopener">国土交通省 中部地方整備局 設計資料（道路橋示方書の単位重量、kN/m³）</a></p>
+<h2>ほかの計算ツール</h2><div class="tools"><a class="tool" href="concrete.html"><b>コンクリート量の計算</b><span>土間・基礎・柱の体積と生コン車の台数</span></a><a class="tool" href="slope.html"><b>勾配の計算</b><span>％・角度・1:n・寸勾配を相互に換算</span></a><a class="tool" href="rebar.html"><b>鉄筋の重量計算</b><span>D10〜D41の長さと本数から重さ</span></a><a class="tool" href="weight.html"><b>比重から重さを計算</b><span>コンクリート・鋼・土など材料別</span></a><a class="tool" href="soil.html"><b>土量の変化率（L・C）</b><span>地山・ほぐし・締固めとダンプ台数</span></a><a class="tool" href="dump.html"><b>ダンプの過積載チェック</b><span>材料と量から重さ・積める上限</span></a><a class="tool" href="count.html"><b>U字溝・縁石の本数</b><span>延長と製品の長さから個数</span></a><a class="tool" href="area.html"><b>坪・㎡・畳の換算</b><span>面積の単位をまとめて変換</span></a></div>
+</main>
+<footer class="site"><div class="wrap">
+<p>計算結果は目安です。設計・積算・施工では、仕様書・設計図書・各種基準の値を必ず確認してください。</p>
+<p><a href="./index.html">ツール一覧</a> ／ <a href="./about.html">このサイトについて・プライバシーポリシー</a> ／ <a href="https://hinakanjapan.hatenablog.com/" target="_blank" rel="noopener">作った人のブログ</a></p>
+<p>© 2026 現場の計算帳（hinakan）</p>
+</div></footer>
+<script src="./assets/data.js"></script>
+<script src="./assets/app.js"></script>
+<script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js");</script>
+</body>
+</html>

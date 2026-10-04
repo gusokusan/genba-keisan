@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ダンプの過積載チェック｜土砂・砕石・砂の重さと積める量の上限｜現場の計算帳</title>
+<meta name="description" content="積む材料と量から重さを計算し、ダンプの最大積載量を超えないか確認。土砂・岩・砂・砕石の単位体積重量つきで、積める量の上限（地山・ほぐし）も出します。">
+<link rel="canonical" href="https://gusokusan.github.io/genba-keisan/dump.html">
+<meta property="og:title" content="ダンプの過積載チェック｜土砂・砕石・砂の重さと積める量の上限">
+<meta property="og:description" content="積む材料と量から重さを計算し、ダンプの最大積載量を超えないか確認。土砂・岩・砂・砕石の単位体積重量つきで、積める量の上限（地山・ほぐし）も出します。">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#ffd500">
+<link rel="stylesheet" href="./assets/style.css">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./assets/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="現場の計算帳">
+</head>
+<body data-tool="dump">
+<header class="site"><div class="wrap"><a class="logo" href="./index.html">現場の計算帳</a><span class="tag">現場で使う計算をスマホで</span></div></header>
+<main class="wrap">
+<nav class="crumb"><a href="./index.html">現場の計算帳</a> › ダンプの過積載</nav>
+<h1>ダンプの過積載チェック</h1>
+<p class="lead">材料と量を入れると、重さと最大積載量に対する割合が出ます。量を入れなくても、その材料なら何m³まで積めるかがわかります。</p>
+<div class="card">
+<div class="field"><label for="d_mat">積む材料</label><select id="d_mat"></select></div>
+
+<div class="field"><label for="d_max">最大積載量（車検証の値）</label>
+<div class="inrow"><input id="d_max" type="text" inputmode="decimal" autocomplete="off" value="9.5"><span class="unit">t</span></div>
+<div class="hint">「10tダンプ」でも最大積載量は車ごとに違います。必ず車検証で確認</div></div>
+<div class="field"><label for="d_state">入れる量の状態</label><select id="d_state"><option value="ground">地山の量（図面・数量表の量）</option><option value="loose">ほぐした量（荷台に載った量）</option></select></div>
+<div class="grid2">
+<div class="field"><label for="d_q">積む量（任意）</label>
+<div class="inrow"><input id="d_q" type="text" inputmode="decimal" autocomplete="off" placeholder="例 5.5"><span class="unit">m³</span></div>
+</div>
+<div class="field"><label for="d_L">ほぐし率 L（任意）</label>
+<div class="inrow"><input id="d_L" type="text" inputmode="decimal" autocomplete="off" placeholder="1.2"><span class="unit"></span></div>
+<div class="hint">ほぐした量の時に使用</div></div></div>
+<div class="result" id="d_out" aria-live="polite"></div>
+</div>
+<div class="ad" aria-hidden="true"></div>
+<h2>計算のしかた</h2>
+<ul>
+<li>重さ（t）＝ 地山の量（m³）× 単位体積重量（t/m³）</li>
+<li>ほぐした量で入れた時は、ほぐした量 ÷ L で地山の量に戻してから計算します（ほぐしても重さは変わらないため）</li>
+<li>積める上限（地山）＝ 最大積載量 ÷ 単位体積重量</li>
+</ul>
+<p>材料の重さは、国総研「土木工事数量算出要領」の値です（土砂 1.8、軟岩 2.2、硬岩 2.5 t/m³ など）。水を含むと重くなるので、雨のあとは余裕を見てください。</p>
+<p class="note">出典：<a href="https://www.nilim.go.jp/lab/pbg/theme/theme2/sr/yoryo0804/s-0804-1-01.pdf" target="_blank" rel="noopener">国土技術政策総合研究所「土木工事数量算出要領」表-4（t/m³）</a>／<a href="https://www.cbr.mlit.go.jp/kawatomizu/kouzou/pdf/08_04sekkeiippan.pdf" target="_blank" rel="noopener">国土交通省 中部地方整備局 設計資料（道路橋示方書の単位重量、kN/m³）</a></p>
+<h2>よくある質問</h2><details><summary>10tダンプは10t積める？</summary><p>「10tダンプ」は車の大きさの呼び名で、実際の最大積載量は車ごとに違います（9t台の車も多い）。車検証に書いてある最大積載量を入れてください。</p></details><details><summary>積算の「1台5.5m³」とは？</summary><p>土砂を10t車で運ぶ時の、1台あたりの地山の量の目安です（長崎県の積算資料など）。5.5m³ × 1.8t/m³ ＝ 9.9t なので、最大積載量に近い量です。</p></details>
+<h2>ほかの計算ツール</h2><div class="tools"><a class="tool" href="concrete.html"><b>コンクリート量の計算</b><span>土間・基礎・柱の体積と生コン車の台数</span></a><a class="tool" href="slope.html"><b>勾配の計算</b><span>％・角度・1:n・寸勾配を相互に換算</span></a><a class="tool" href="rebar.html"><b>鉄筋の重量計算</b><span>D10〜D41の長さと本数から重さ</span></a><a class="tool" href="weight.html"><b>比重から重さを計算</b><span>コンクリート・鋼・土など材料別</span></a><a class="tool" href="soil.html"><b>土量の変化率（L・C）</b><span>地山・ほぐし・締固めとダンプ台数</span></a><a class="tool" href="steel.html"><b>鋼材の重さ（形から）</b><span>鋼板・丸鋼・パイプ・単管のkg/m</span></a><a class="tool" href="count.html"><b>U字溝・縁石の本数</b><span>延長と製品の長さから個数</span></a><a class="tool" href="area.html"><b>坪・㎡・畳の換算</b><span>面積の単位をまとめて変換</span></a></div>
+</main>
+<footer class="site"><div class="wrap">
+<p>計算結果は目安です。設計・積算・施工では、仕様書・設計図書・各種基準の値を必ず確認してください。</p>
+<p><a href="./index.html">ツール一覧</a> ／ <a href="./about.html">このサイトについて・プライバシーポリシー</a> ／ <a href="https://hinakanjapan.hatenablog.com/" target="_blank" rel="noopener">作った人のブログ</a></p>
+<p>© 2026 現場の計算帳（hinakan）</p>
+</div></footer>
+<script src="./assets/data.js"></script>
+<script src="./assets/app.js"></script>
+<script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js");</script>
+</body>
+</html>

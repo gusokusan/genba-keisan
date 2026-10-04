@@ -201,6 +201,83 @@
       "</ul>");
   };
 
+  // ダンプの過積載チェック
+  tools.dump = function () {
+    var key = $("#d_mat") && $("#d_mat").value;
+    var row = (D.materials || []).filter(function (m) { return m.key === key; })[0];
+    var max = num("d_max"), q = num("d_q"), L = num("d_L");
+    var state = $("#d_state") && $("#d_state").value;
+    if (!row) return show("d_out", need("積む材料を選んでください"));
+    if (!ok(max)) return show("d_out", need("最大積載量を入れてください（車検証の値）"));
+    var ground;
+    if (ok(q)) {
+      if (state === "loose") { if (!ok(L)) L = 1.2; ground = q / L; } else ground = q;
+    }
+    var maxGround = max / row.t;
+    var html = "";
+    if (ok(q)) {
+      var t = ground * row.t, pct = t / max * 100;
+      var over = t > max;
+      html += '<div class="big">' + fmt(t, 2) + ' <small>t（最大積載の ' + fmt(pct, 0) + '％）</small></div>' +
+        '<p class="' + (over ? "err" : "") + '"><b>' + (over ? "過積載です。" + fmt(t - max, 2) + " t 多い" : "最大積載量の内側です") + "</b></p>";
+    }
+    html += "<ul>" +
+      "<li>" + row.name + "：" + row.t + " t/m³ で計算</li>" +
+      "<li>積める量の上限（地山の量）：<b>" + fmt(maxGround, 2) + " m³</b></li>" +
+      "<li>積める量の上限（ほぐした量・L " + (ok(L) ? L : 1.2) + "）：<b>" + fmt(maxGround * (ok(L) ? L : 1.2), 2) + " m³</b></li>" +
+      "</ul>";
+    show("d_out", html);
+  };
+
+  // 鋼材の重さ（形から計算）
+  tools.steel = function () {
+    var shape = activePane();
+    var rho = 7.85; // kg/(mm²・m)×1000 と同じ：鋼 7.85 t/m³
+    var area = NaN, desc = ""; // 断面積 mm²
+    if (shape === "plate") {
+      var t = num("st_pt"), w = num("st_pw");
+      area = t * w; desc = "鋼板 " + fmt(t, 1) + "mm × " + fmt(w, 0) + "mm";
+    } else if (shape === "round") {
+      var d = num("st_rd");
+      area = Math.PI * d * d / 4; desc = "丸鋼 φ" + fmt(d, 1) + "mm";
+    } else if (shape === "pipe") {
+      var od = num("st_od"), tt = num("st_ot");
+      if (ok(od) && ok(tt) && tt * 2 >= od) return show("st_out", need("厚さが外径の半分以上になっています"));
+      area = Math.PI * (od - tt) * tt; desc = "丸パイプ φ" + fmt(od, 1) + " × " + fmt(tt, 1) + "mm";
+    } else if (shape === "box") {
+      var a = num("st_ba"), b = num("st_bb"), bt = num("st_bt");
+      if (ok(a) && ok(b) && ok(bt) && (bt * 2 >= a || bt * 2 >= b)) return show("st_out", need("厚さが辺の半分以上になっています"));
+      area = a * b - (a - 2 * bt) * (b - 2 * bt); desc = "角パイプ " + fmt(a, 0) + "×" + fmt(b, 0) + "×" + fmt(bt, 1) + "mm（角の丸みは無視）";
+    }
+    var len = num("st_len"), n = num("st_n") || 1;
+    if (!ok(area)) return show("st_out", need("寸法を入れてください"));
+    var kgm = area * rho / 1000;
+    var html = '<div class="big">' + fmt(kgm, 2) + ' <small>kg/m</small></div><ul><li>' + desc + "</li>";
+    if (ok(len)) {
+      var kg = kgm * len * n;
+      html += "<li>" + fmt(len, 2) + "m × " + fmt(n, 0) + "本：<b>" + fmt(kg, 1) + " kg</b>（" + fmt(kg / 1000, 3) + " t）</li>";
+    }
+    show("st_out", html + "<li>鋼の密度 7.85 t/m³ で計算</li></ul>");
+  };
+
+  // 本数（U字溝・縁石・ブロックなど）
+  tools.count = function () {
+    var L = num("n_len"), p = num("n_unit"), loss = num("n_loss");
+    if (!(ok(L) && ok(p))) return show("n_out", need("延長と1個の長さを入れてください"));
+    if (!isFinite(loss) || loss < 0) loss = 0;
+    var exact = L / (p / 1000);
+    var need1 = Math.ceil(exact - 1e-9);
+    var order = Math.ceil(need1 * (1 + loss / 100) - 1e-9);
+    var rest = need1 * p / 1000 - L;
+    show("n_out",
+      '<div class="big">' + need1 + ' <small>個（延長 ' + fmt(L, 2) + 'm）</small></div>' +
+      "<ul>" +
+      "<li>計算：" + fmt(L, 2) + "m ÷ " + fmt(p, 0) + "mm ＝ " + fmt(exact, 2) + " 個 → 切り上げ</li>" +
+      "<li>最後の1個は約 " + fmt((p / 1000 - rest) * 1000, 0) + " mm 分だけ使う（" + fmt(rest * 1000, 0) + " mm 余る）</li>" +
+      "<li>予備 " + fmt(loss, 0) + "% を見た注文数：<b>" + order + " 個</b></li>" +
+      "</ul>");
+  };
+
   function recalc() {
     var t = document.body.getAttribute("data-tool");
     if (tools[t]) { try { tools[t](); } catch (e) { /* 入力途中は無視 */ } }
@@ -217,6 +294,8 @@
   }
   fillSelect("r_size", D.rebar, function (r) { return r.name + "（" + r.kgm + " kg/m）"; }, "name", "D13");
   fillSelect("w_mat", D.materials, function (m) { return m.name + "（" + m.t + " t/m³）"; }, "key", D.materials && D.materials[0] && D.materials[0].key);
+  fillSelect("d_mat", (D.materials || []).filter(function (m) { return ["soil", "softrock", "hardrock", "sand", "gravel", "c40", "m40", "asdense", "conc"].indexOf(m.key) >= 0; }),
+    function (m) { return m.name + "（" + m.t + " t/m³）"; }, "key", "soil");
   fillSelect("so_type", D.soil, function (s) { return s.name + "（L " + s.L + "／C " + s.C + "）"; }, "key", D.soil && D.soil[0] && D.soil[0].key);
 
   document.addEventListener("input", recalc);
