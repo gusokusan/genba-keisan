@@ -89,6 +89,7 @@ p.lead { color: var(--sub); margin: 0 0 16px; }
 .result .big small { font-size: 15px; font-weight: 600; }
 .result ul { margin: 6px 0 0; padding-left: 1.2em; }
 .result .err { color: var(--danger); font-weight: 700; }
+.result .ask { color: var(--sub); margin: 0; }
 .note { font-size: 13px; color: var(--sub); }
 
 table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0; }

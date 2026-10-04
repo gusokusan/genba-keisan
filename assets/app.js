@@ -19,7 +19,7 @@
   }
   function show(id, html) { var el = document.getElementById(id); if (el) el.innerHTML = html; }
   function ok(v) { return isFinite(v) && v > 0; }
-  function need(msg) { return '<p class="err">' + msg + "</p>"; }
+  function need(msg) { return '<p class="ask">' + msg + "</p>"; }
 
   // タブ（形の切り替えなど）
   $all(".tabs").forEach(function (tabs) {
