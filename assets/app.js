@@ -278,6 +278,26 @@
       "</ul>");
   };
 
+  // 舗装の材料の量
+  tools.pave = function () {
+    var key = $("#p_mat") && $("#p_mat").value;
+    var row = (D.materials || []).filter(function (m) { return m.key === key; })[0];
+    var mode = activePane();
+    var A = mode === "lw" ? num("p_l") * num("p_w") : num("p_a");
+    var tcm = num("p_t"), loss = num("p_loss");
+    if (!isFinite(loss) || loss < 0) loss = 0;
+    if (!row) return show("p_out", need("材料を選んでください"));
+    if (!(ok(A) && ok(tcm))) return show("p_out", need("面積（または長さ×幅）と厚さを入れてください"));
+    var v = A * tcm / 100, t = v * row.t, tl = t * (1 + loss / 100);
+    show("p_out",
+      '<div class="big">' + fmt(tl, 2) + ' <small>t（ロス ' + fmt(loss, 0) + '% 込み）</small></div>' +
+      "<ul>" +
+      "<li>体積：" + fmt(A, 2) + "㎡ × " + fmt(tcm, 1) + "cm ＝ <b>" + fmt(v, 3) + " m³</b></li>" +
+      "<li>" + row.name + "：" + row.t + " t/m³ → " + fmt(t, 2) + " t（ロスなし）</li>" +
+      "<li>4tダンプ換算の目安：約 " + Math.ceil(tl / 4 - 1e-9) + " 台分（積載4tとして）</li>" +
+      "</ul>");
+  };
+
   function recalc() {
     var t = document.body.getAttribute("data-tool");
     if (tools[t]) { try { tools[t](); } catch (e) { /* 入力途中は無視 */ } }
@@ -296,6 +316,8 @@
   fillSelect("w_mat", D.materials, function (m) { return m.name + "（" + m.t + " t/m³）"; }, "key", D.materials && D.materials[0] && D.materials[0].key);
   fillSelect("d_mat", (D.materials || []).filter(function (m) { return ["soil", "softrock", "hardrock", "sand", "gravel", "c40", "m40", "asdense", "conc"].indexOf(m.key) >= 0; }),
     function (m) { return m.name + "（" + m.t + " t/m³）"; }, "key", "soil");
+  fillSelect("p_mat", (D.materials || []).filter(function (m) { return ["asdense", "asfine", "c40", "m40"].indexOf(m.key) >= 0; }),
+    function (m) { return m.name + "（" + m.t + " t/m³）"; }, "key", "asdense");
   fillSelect("so_type", D.soil, function (s) { return s.name + "（L " + s.L + "／C " + s.C + "）"; }, "key", D.soil && D.soil[0] && D.soil[0].key);
 
   document.addEventListener("input", recalc);

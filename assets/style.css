@@ -114,3 +114,5 @@ details summary { font-weight: 700; cursor: pointer; }
 
 footer.site { margin-top: 40px; padding: 20px 0 40px; border-top: 1px solid var(--line); font-size: 13px; color: var(--sub); }
 footer.site a { color: var(--sub); }
+a.chip { border: 1px solid var(--line); border-radius: 999px; padding: 6px 12px; font-size: 14px; text-decoration: none; color: var(--text); background: var(--card); }
+a.chip:hover { background: var(--accent); color: var(--accent-ink); }
