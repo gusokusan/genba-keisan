@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>モルタルの材料計算｜セメント袋数と砂の量（配合1:1・1:2・1:3）｜現場の計算帳</title>
+<meta name="description" content="モルタルの量（または面積×厚さ）と配合から、セメントが何kg・何袋、砂が何m³要るかを計算。国土交通省の土木工事標準積算基準書の1m³あたりの材料（ロス込み）を使います。">
+<link rel="canonical" href="https://gusokusan.github.io/genba-keisan/mortar.html">
+<meta property="og:title" content="モルタルの材料計算｜セメント袋数と砂の量（配合1:1・1:2・1:3）">
+<meta property="og:description" content="モルタルの量（または面積×厚さ）と配合から、セメントが何kg・何袋、砂が何m³要るかを計算。国土交通省の土木工事標準積算基準書の1m³あたりの材料（ロス込み）を使います。">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#ffd500">
+<link rel="stylesheet" href="./assets/style.css">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./assets/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="現場の計算帳">
+</head>
+<body data-tool="mortar">
+<header class="site"><div class="wrap"><a class="logo" href="./index.html">現場の計算帳</a><span class="tag">現場で使う計算をスマホで</span></div></header>
+<main class="wrap">
+<nav class="crumb"><a href="./index.html">現場の計算帳</a> › モルタルの材料</nav>
+<h1>モルタルの材料（セメント袋数・砂）</h1>
+<p class="lead">配合とモルタルの量を入れると、セメントの袋数と砂の量が出ます。空練りモルタルや目地・敷きモルタルの材料手配の目安に。</p>
+<div class="card">
+<div class="field"><label for="mo_mix">配合（セメント：砂）</label><select id="mo_mix"></select></div>
+<div class="tabs" role="tablist"><button type="button" role="tab" data-for="vol" aria-selected="true">量（m³）で入れる</button><button type="button" role="tab" data-for="at" aria-selected="false">面積×厚さで入れる</button></div>
+<div data-pane="vol">
+<div class="field"><label for="mo_v">モルタルの量</label>
+<div class="inrow"><input id="mo_v" type="text" inputmode="decimal" autocomplete="off" placeholder="例 0.5"><span class="unit">m³</span></div>
+</div></div>
+<div data-pane="at" hidden><div class="grid2">
+<div class="field"><label for="mo_a">面積</label>
+<div class="inrow"><input id="mo_a" type="text" inputmode="decimal" autocomplete="off" placeholder="例 20"><span class="unit">㎡</span></div>
+</div>
+<div class="field"><label for="mo_t">厚さ</label>
+<div class="inrow"><input id="mo_t" type="text" inputmode="decimal" autocomplete="off" placeholder="例 3"><span class="unit">cm</span></div>
+</div></div></div>
+
+<div class="field"><label for="mo_bag">セメント1袋の重さ</label>
+<div class="inrow"><input id="mo_bag" type="text" inputmode="decimal" autocomplete="off" value="25"><span class="unit">kg</span></div>
+<div class="hint">普通ポルトランドセメントは 25kg 袋が多い。袋の表示で確認</div></div>
+<div class="result" id="mo_out" aria-live="polite"></div>
+</div>
+<div class="ad" aria-hidden="true"></div>
+<h2>計算のしかた</h2>
+<ul>
+<li>セメント（kg）＝ モルタルの量（m³）× 1m³あたりのセメント</li>
+<li>袋数 ＝ セメント ÷ 1袋の重さ（切り上げ）</li>
+<li>砂（m³）＝ モルタルの量 × 1m³あたりの砂</li>
+</ul>
+<p>1m³あたりの材料は、国土交通省「土木工事標準積算基準書」のモルタル練工の表の値です（1:1＝セメント1,100kg・砂0.75m³、1:2＝720kg・0.95m³、1:3＝530kg・1.05m³）。この表は<b>ロスを見込んだ数字</b>なので、ここではロス率を別に足していません。</p>
+<p class="note">出典：<a href="https://jsce.jp/pro/node/1722" target="_blank" rel="noopener">国土交通省「土木工事標準積算基準書」第4章 コンクリート工 10.モルタル練工（1m³あたりの材料・ロス込み）。値は土木学会の技術相談ページの引用で確認</a></p>
+<p class="note">水の量は、砂の湿り具合や施工のしかたで変わるので出していません。配合は体積比です。仕様書で配合や材料が決まっている場合は、そちらに従ってください。</p>
+<h2>ほかの計算ツール</h2><div class="tools"><a class="tool" href="concrete.html"><b>コンクリート量の計算</b><span>土間・基礎・柱の体積と生コン車の台数</span></a><a class="tool" href="soil.html"><b>土量の変化率（L・C）</b><span>地山・ほぐし・締固めとダンプ台数</span></a><a class="tool" href="dump.html"><b>ダンプの過積載チェック</b><span>材料と量から重さ・積める上限</span></a><a class="tool" href="pave.html"><b>舗装の材料の量</b><span>アスファルト合材・路盤材のt</span></a><a class="tool" href="count.html"><b>U字溝・縁石の本数</b><span>延長と製品の長さから個数</span></a><a class="tool" href="rebar.html"><b>鉄筋の重量計算</b><span>D6〜D51の長さと本数から重さ</span></a><a class="tool" href="steel.html"><b>鋼材の重さ（形から）</b><span>鋼板・丸鋼・パイプ・単管のkg/m</span></a><a class="tool" href="weight.html"><b>比重から重さを計算</b><span>コンクリート・鋼・土など材料別</span></a><a class="tool" href="slope.html"><b>勾配の計算</b><span>％・角度・1:n・寸勾配を相互に換算</span></a><a class="tool" href="area.html"><b>坪・㎡・畳の換算</b><span>面積の単位をまとめて変換</span></a></div><p><a href="index.html">ツールの一覧（分野別）へ</a></p>
+<section class="gear" aria-label="この計算と一緒に使う道具">
+<h2>この計算と一緒に使う道具</h2>
+<p class="pr"><span class="prmark">PR</span>この欄はAmazonアソシエイトのリンクを含みます。</p>
+<ul>
+<li><a href="https://www.amazon.co.jp/s?k=%E3%83%88%E3%83%AD%E8%88%9F&amp;tag=hinakanjapan-22" target="_blank" rel="sponsored noopener">トロ舟（モルタル練り用）<span>Amazonで探す ›</span></a></li>
+<li><a href="https://www.amazon.co.jp/s?k=%E5%B7%A6%E5%AE%98%20%E3%82%B3%E3%83%86&amp;tag=hinakanjapan-22" target="_blank" rel="sponsored noopener">左官ゴテ<span>Amazonで探す ›</span></a></li>
+</ul>
+</section>
+</main>
+<footer class="site"><div class="wrap">
+<p>計算結果は目安です。設計・積算・施工では、仕様書・設計図書・各種基準の値を必ず確認してください。</p>
+<p><a href="./index.html">ツール一覧</a> ／ <a href="./about.html">このサイトについて・プライバシーポリシー</a> ／ <a href="https://gusokusan.github.io/genba-harigami/" target="_blank" rel="noopener">現場の張り紙（無料PDF）</a> ／ <a href="https://gusokusan.github.io/genba-kotoba/" target="_blank" rel="noopener">現場のことば帳</a> ／ <a href="https://hinakanjapan.hatenablog.com/" target="_blank" rel="noopener">作った人のブログ</a></p>
+<p>Amazonのアソシエイトとして、当サイトは適格販売により収入を得ています。</p>
+<p>© 2026 現場の計算帳（hinakan）</p>
+</div></footer>
+<script src="./assets/data.js"></script>
+<script src="./assets/app.js"></script>
+<script>if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js");</script>
+</body>
+</html>

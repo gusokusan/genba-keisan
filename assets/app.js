@@ -278,6 +278,27 @@
       "</ul>");
   };
 
+  // モルタルの材料（セメント袋数・砂）
+  tools.mortar = function () {
+    var key = $("#mo_mix") && $("#mo_mix").value;
+    var row = (D.mortar || []).filter(function (m) { return m.key === key; })[0];
+    var mode = activePane();
+    var v = mode === "at" ? num("mo_a") * num("mo_t") / 100 : num("mo_v");
+    var bag = num("mo_bag");
+    if (!row) return show("mo_out", need("配合を選んでください"));
+    if (!ok(v)) return show("mo_out", need(mode === "at" ? "面積と厚さを入れてください" : "モルタルの量を入れてください"));
+    if (!ok(bag)) return show("mo_out", need("セメント1袋の重さを入れてください"));
+    var c = v * row.cement, n = Math.ceil(c / bag - 1e-9), sand = v * row.sand;
+    show("mo_out",
+      '<div class="big">' + n + ' <small>袋（' + fmt(bag, 0) + 'kg袋）＋ 砂 ' + fmt(sand, 2) + ' m³</small></div>' +
+      "<ul>" +
+      "<li>モルタルの量：<b>" + fmt(v, 3) + " m³</b>（配合 " + row.name + "）</li>" +
+      "<li>セメント：" + fmt(v, 3) + " × " + fmt(row.cement, 0) + " kg ＝ <b>" + fmt(c, 1) + " kg</b> → " + fmt(c / bag, 2) + " 袋 → 切り上げ</li>" +
+      "<li>砂：" + fmt(v, 3) + " × " + row.sand + " m³ ＝ <b>" + fmt(sand, 3) + " m³</b></li>" +
+      "<li>1m³あたりの材料はロス込みの値</li>" +
+      "</ul>");
+  };
+
   // 舗装の材料の量
   tools.pave = function () {
     var key = $("#p_mat") && $("#p_mat").value;
@@ -318,6 +339,7 @@
     function (m) { return m.name + "（" + m.t + " t/m³）"; }, "key", "soil");
   fillSelect("p_mat", (D.materials || []).filter(function (m) { return ["asdense", "asfine", "c40", "m40"].indexOf(m.key) >= 0; }),
     function (m) { return m.name + "（" + m.t + " t/m³）"; }, "key", "asdense");
+  fillSelect("mo_mix", D.mortar, function (m) { return m.name + "（セメント " + m.cement + "kg・砂 " + m.sand + "m³／m³）"; }, "key", "m13");
   fillSelect("so_type", D.soil, function (s) { return s.name + "（L " + s.L + "／C " + s.C + "）"; }, "key", D.soil && D.soil[0] && D.soil[0].key);
 
   document.addEventListener("input", recalc);
